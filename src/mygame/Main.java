@@ -48,7 +48,7 @@ public class Main extends SimpleApplication {
 
         rootNode.attachChild(geom);
     }
-
+  //Here is a comment
     @Override
     public void simpleUpdate(float tpf) {
         if (mygui.getchanged()) {
