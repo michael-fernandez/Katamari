@@ -10,7 +10,7 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Box;
 
 /**
- * 
+ *
  *
  * @author Mike Jake and Dave
  */
@@ -20,6 +20,9 @@ public class Main extends SimpleApplication {
     KinectSkeleton kinectskeleton;
     BulletAppState bulletAppState;
     Mocap moCap;
+    //Gui stuff
+    gui mygui;
+    Geometry geom;
 
     public static void main(String[] args) {
         Main app = new Main();
@@ -28,6 +31,7 @@ public class Main extends SimpleApplication {
 
     @Override
     public void simpleInitApp() {
+        mygui = new gui(this);
         kinectskeleton = new KinectSkeleton(this);
         kinect = new KinectInterface(this);
 
@@ -47,7 +51,35 @@ public class Main extends SimpleApplication {
 
     @Override
     public void simpleUpdate(float tpf) {
-        //TODO: add update code
+        if (mygui.getchanged()) {
+            if ("green".equals(mygui.s)) {
+                rootNode.detachAllChildren();
+                Box b = new Box(Vector3f.ZERO, 1, 1, 1);
+                geom = new Geometry("Box", b);
+
+                Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+                mat.setColor("Color", ColorRGBA.Green);
+                geom.setMaterial(mat);
+
+                rootNode.attachChild(geom);
+            }
+            if ("blue".equals(mygui.s)) {
+                rootNode.detachAllChildren();
+                Box b = new Box(Vector3f.ZERO, 2, 2, 2);
+                geom = new Geometry("Box", b);
+
+                Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+                mat.setColor("Color", ColorRGBA.Blue);
+                geom.setMaterial(mat);
+
+                rootNode.attachChild(geom);
+            }
+            geom.rotate(0, 0, 5f);
+            mygui.resetchanged();
+        }
+        if (geom != null) {
+            geom.rotate(0, 0, 5f);
+        }
     }
 
     @Override
